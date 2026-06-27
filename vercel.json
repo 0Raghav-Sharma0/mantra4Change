@@ -2,10 +2,11 @@
   "version": 2,
   "builds": [
     {
-      "src": "apps/client/package.json",
+      "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "dist"
+        "buildCommand": "npm run build",
+        "distDir": "apps/client/dist"
       }
     }
   ],
