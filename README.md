@@ -53,6 +53,35 @@ npm run dev
 - `apps/analytics` — Python FastAPI chart generation
 - `packages/shared-types` — shared TypeScript schemas
 
+## System diagrams
+
+### Architecture overview
+
+```mermaid
+flowchart LR
+  A[Client<br/>React + Vite] --> B[Server<br/>Express API]
+  B --> C[MongoDB]
+  B --> D[Analytics<br/>Python FastAPI]
+  D --> E[Chart data<br/>Plotly / PNG]
+  A -->|API calls| B
+  B -->|aggregates| C
+  B -->|chart requests| D
+```
+
+### Data flow
+
+```mermaid
+flowchart TD
+  CSV[CSV sources] --> Seed[Seed script]
+  Seed --> Mongo[MongoDB]
+  User[User filters] --> UI[Client UI]
+  UI --> API[Server endpoints]
+  API --> DB[Queries & metrics]
+  API --> Analytics[Chart generation]
+  Analytics --> API
+  API --> UI
+```
+
 ## Notes
 
 - Data is seeded from CSV files in `02_Primary_PBL_Data` and `03_Grant_Reporting_Evidence/csv`.
