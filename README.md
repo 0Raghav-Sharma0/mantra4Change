@@ -69,6 +69,14 @@ The client can also be deployed to Vercel as a static app. This repo includes `v
 - The app is served from `dist`
 - SPA fallback is enabled via Vercel routes
 
+#### Vercel environment variables
+
+Set these values in the Vercel dashboard under Project Settings > Environment Variables:
+
+- `VITE_API_BASE_URL` = `https://your-backend-host.com`
+
+For local preview builds in Vercel, the value should point to the running API host.
+
 > Note: the backend and analytics stack still need a separate host with MongoDB.
 
 ## System diagrams
