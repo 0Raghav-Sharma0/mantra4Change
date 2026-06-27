@@ -1,0 +1,192 @@
+{
+  "generatedAt": "2026-06-24T12:21:54.353252+00:00",
+  "dataRoot": "/home/raghav/Documents/mantra4Changee/data",
+  "assumptions": [
+    "Synthetic assessment data only - not official monitoring records.",
+    "One school response row per school per reporting month.",
+    "Attendance and utilization rates are stored as decimals (0-1)."
+  ],
+  "summary": {
+    "totalRows": 6963,
+    "schoolResponseRows": 6900,
+    "uniqueDistricts": 38,
+    "uniqueBlocks": 395,
+    "uniqueSchools": 2300,
+    "reportingMonths": [
+      "2025-07",
+      "2025-08",
+      "2025-09"
+    ]
+  },
+  "datasets": {
+    "schoolResponse": {
+      "rowCount": 6900,
+      "columnCount": 25,
+      "nullPercentages": {
+        "reportingMonth": 0.0,
+        "timestampRaw": 0.0,
+        "schoolName": 0.0,
+        "schoolCode": 0.0,
+        "district": 0.0,
+        "block": 0.0,
+        "pblConducted": 0.0,
+        "evidenceSubmitted": 0.0,
+        "classes": 0.0,
+        "subjects": 0.0,
+        "enrollmentClass6": 0.0,
+        "attendanceClass6Science": 0.0,
+        "attendanceClass6Math": 0.0,
+        "enrollmentClass7": 0.0,
+        "attendanceClass7Science": 0.0,
+        "attendanceClass7Math": 0.0,
+        "enrollmentClass8": 0.0,
+        "attendanceClass8Science": 0.0,
+        "attendanceClass8Math": 0.0,
+        "totalEnrollment": 0.0,
+        "totalAttendance": 0.0,
+        "attendanceRate": 0.0,
+        "riskStatus": 0.0,
+        "sourceFile": 0.0,
+        "submittedAt": 0.0
+      },
+      "schemaValid": true,
+      "schemaErrors": [],
+      "uniqueCounts": {
+        "districts": 38,
+        "blocks": 395,
+        "schools": 2300
+      },
+      "monthCoverage": {
+        "months": [
+          "2025-07",
+          "2025-08",
+          "2025-09"
+        ],
+        "rowsPerMonth": {
+          "2025-08": 2300,
+          "2025-07": 2300,
+          "2025-09": 2300
+        }
+      },
+      "duplicateSchoolMonthRows": 0,
+      "sourceFiles": [
+        "PBL_School_Response_Data_August_2025.csv",
+        "PBL_School_Response_Data_July_2025.csv",
+        "PBL_School_Response_Data_September_2025.csv"
+      ]
+    },
+    "grantFinance": {
+      "rowCount": 45,
+      "columnCount": 13,
+      "nullPercentages": {
+        "grantId": 0.0,
+        "donor": 0.0,
+        "grantName": 0.0,
+        "periodStart": 0.0,
+        "periodEnd": 0.0,
+        "coveredDistricts": 0.0,
+        "reportingMonth": 0.0,
+        "budgetLine": 0.0,
+        "approvedBudgetUnits": 0.0,
+        "monthlyUtilizedUnits": 0.0,
+        "cumulativeUtilizedUnits": 0.0,
+        "cumulativeUtilizationRate": 0.0,
+        "financeNote": 0.0
+      },
+      "schemaValid": true,
+      "schemaErrors": [],
+      "uniqueCounts": {
+        "grants": 3,
+        "donors": 3
+      },
+      "monthCoverage": {
+        "months": [
+          "2025-07",
+          "2025-08",
+          "2025-09"
+        ],
+        "rowsPerMonth": {
+          "2025-07": 15,
+          "2025-08": 15,
+          "2025-09": 15
+        }
+      }
+    },
+    "grantPerformance": {
+      "rowCount": 9,
+      "columnCount": 19,
+      "nullPercentages": {
+        "grantId": 0.0,
+        "donor": 0.0,
+        "grantName": 0.0,
+        "reportingMonth": 0.0,
+        "periodEndDate": 0.0,
+        "reportDueDate": 0.0,
+        "reportStatus": 0.0,
+        "coveredDistricts": 0.0,
+        "sampledSchoolRecords": 0.0,
+        "schoolsCompletedPbl": 0.0,
+        "pblCompletionRate": 0.0,
+        "schoolsWithEvidence": 0.0,
+        "evidenceSubmissionRate": 0.0,
+        "totalEnrollment": 0.0,
+        "totalAttendance": 0.0,
+        "attendanceRate": 0.0,
+        "riskStatus": 0.0,
+        "milestoneSummary": 0.0,
+        "draftReportText": 0.0
+      },
+      "schemaValid": true,
+      "schemaErrors": [],
+      "uniqueCounts": {
+        "grants": 3,
+        "donors": 3
+      },
+      "monthCoverage": {
+        "months": [
+          "2025-07",
+          "2025-08",
+          "2025-09"
+        ],
+        "rowsPerMonth": {
+          "2025-07": 3,
+          "2025-08": 3,
+          "2025-09": 3
+        }
+      }
+    },
+    "evidenceMedia": {
+      "rowCount": 9,
+      "columnCount": 11,
+      "nullPercentages": {
+        "recordId": 0.0,
+        "recordType": 0.0,
+        "grantId": 0.0,
+        "donor": 0.0,
+        "reportingMonth": 0.0,
+        "district": 0.0,
+        "title": 0.0,
+        "summaryOrCaption": 0.0,
+        "fileName": 0.0,
+        "relativePath": 0.0,
+        "usageNote": 0.0
+      },
+      "schemaValid": true,
+      "schemaErrors": [],
+      "uniqueCounts": {
+        "grants": 3,
+        "donors": 3
+      },
+      "monthCoverage": {
+        "months": [
+          "2025-08",
+          "2025-09"
+        ],
+        "rowsPerMonth": {
+          "2025-09": 7,
+          "2025-08": 2
+        }
+      }
+    }
+  }
+}

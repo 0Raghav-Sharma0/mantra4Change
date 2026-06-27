@@ -1,0 +1,86 @@
+"""CSV header → normalized field name mappings (mirrors apps/server column maps)."""
+
+PBL_COLUMN_MAP: dict[str, str] = {
+    "Reporting Month": "reportingMonth",
+    "Timestamp": "timestampRaw",
+    "What is the name of your school?": "schoolName",
+    "What is your school's synthetic school code?": "schoolCode",
+    "What is the name of your district?": "district",
+    "Block Details": "block",
+    "Was the PBL project conducted in your school this month?": "pblConducted",
+    "Was evidence submitted for the completed PBL project?": "evidenceSubmitted",
+    "In which class/classes did you conduct the PBL project?": "classes",
+    "Which subject do you teach?": "subjects",
+    "Total number of students enrolled in Class 6, including all sections": "enrollmentClass6",
+    "Average student attendance during the Class 6 PBL Science session. If you did not teach Science in Class 6, enter 0.": "attendanceClass6Science",
+    "Average student attendance during the Class 6 PBL Math session. If you did not teach Math in Class 6, enter 0.": "attendanceClass6Math",
+    "Total number of students enrolled in Class 7, including all sections": "enrollmentClass7",
+    "Average student attendance during the Class 7 PBL Science session. If you did not teach Science in Class 7, enter 0.": "attendanceClass7Science",
+    "Average student attendance during the Class 7 PBL Math session. If you did not teach Math in Class 7, enter 0.": "attendanceClass7Math",
+    "Total number of students enrolled in Class 8, including all sections": "enrollmentClass8",
+    "Average student attendance during the Class 8 PBL Science session. If you did not teach Science in Class 8, enter 0.": "attendanceClass8Science",
+    "Average student attendance during the Class 8 PBL Math session. If you did not teach Math in Class 8, enter 0.": "attendanceClass8Math",
+    "Derived: Total enrollment across Classes 6-8": "totalEnrollment",
+    "Derived: Total attendance across PBL Science and Math sessions": "totalAttendance",
+    "Derived: Overall PBL attendance rate": "attendanceRate",
+    "Derived: Risk status": "riskStatus",
+}
+
+GRANT_FINANCE_COLUMN_MAP: dict[str, str] = {
+    "grant_id": "grantId",
+    "donor": "donor",
+    "grant_name": "grantName",
+    "period_start": "periodStart",
+    "period_end": "periodEnd",
+    "covered_districts": "coveredDistricts",
+    "reporting_month": "reportingMonth",
+    "budget_line": "budgetLine",
+    "approved_budget_units": "approvedBudgetUnits",
+    "monthly_utilized_units": "monthlyUtilizedUnits",
+    "cumulative_utilized_units": "cumulativeUtilizedUnits",
+    "cumulative_utilization_rate": "cumulativeUtilizationRate",
+    "finance_note": "financeNote",
+}
+
+GRANT_PERFORMANCE_COLUMN_MAP: dict[str, str] = {
+    "grant_id": "grantId",
+    "donor": "donor",
+    "grant_name": "grantName",
+    "reporting_month": "reportingMonth",
+    "period_end_date": "periodEndDate",
+    "report_due_date": "reportDueDate",
+    "report_status": "reportStatus",
+    "covered_districts": "coveredDistricts",
+    "sampled_school_records": "sampledSchoolRecords",
+    "schools_completed_pbl": "schoolsCompletedPbl",
+    "pbl_completion_rate": "pblCompletionRate",
+    "schools_with_evidence": "schoolsWithEvidence",
+    "evidence_submission_rate": "evidenceSubmissionRate",
+    "total_enrollment": "totalEnrollment",
+    "total_attendance": "totalAttendance",
+    "attendance_rate": "attendanceRate",
+    "risk_status": "riskStatus",
+    "milestone_summary": "milestoneSummary",
+    "draft_report_text": "draftReportText",
+}
+
+EVIDENCE_MEDIA_COLUMN_MAP: dict[str, str] = {
+    "record_id": "recordId",
+    "record_type": "recordType",
+    "grant_id": "grantId",
+    "donor": "donor",
+    "reporting_month": "reportingMonth",
+    "district": "district",
+    "title": "title",
+    "summary_or_caption": "summaryOrCaption",
+    "file_name": "fileName",
+    "relative_path": "relativePath",
+    "usage_note": "usageNote",
+}
+
+DATASET_SCHEMAS: dict[str, dict[str, str]] = {
+    "schoolResponse": PBL_COLUMN_MAP,
+    "grantFinance": GRANT_FINANCE_COLUMN_MAP,
+    "grantPerformance": GRANT_PERFORMANCE_COLUMN_MAP,
+    "evidenceMedia": EVIDENCE_MEDIA_COLUMN_MAP,
+}

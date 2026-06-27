@@ -1,0 +1,283 @@
+{
+  "info": {
+    "name": "Mantra4Change PBL API",
+    "description": "Node server API gateway (port 5000). Set `baseUrl` collection variable before running.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000" },
+    { "key": "analyticsUrl", "value": "http://localhost:8000" },
+    { "key": "month", "value": "2025-09" },
+    { "key": "grantId", "value": "GRANT_AA_2025" }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Health (basic)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/health" }
+        },
+        {
+          "name": "Health (full)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/health/full" }
+        }
+      ]
+    },
+    {
+      "name": "Meta",
+      "item": [
+        {
+          "name": "Seed preview counts",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/meta/seed-preview" }
+        },
+        {
+          "name": "Filter options",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/meta/filters" }
+        }
+      ]
+    },
+    {
+      "name": "Program Intelligence",
+      "item": [
+        {
+          "name": "Filters",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/program/filters" }
+        },
+        {
+          "name": "Dashboard",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/program/dashboard?month={{month}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "program", "dashboard"],
+              "query": [{ "key": "month", "value": "{{month}}" }]
+            }
+          }
+        },
+        {
+          "name": "Districts",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/program/districts?month={{month}}"
+          }
+        },
+        {
+          "name": "Blocks",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/program/blocks?month={{month}}"
+          }
+        },
+        {
+          "name": "Risks",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/program/risks?month={{month}}"
+          }
+        },
+        {
+          "name": "Review summary",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/program/review-summary?month={{month}}"
+          }
+        },
+        {
+          "name": "Monthly review",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/program/monthly-review?month={{month}}"
+          }
+        },
+        {
+          "name": "Action items",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/program/action-items?month={{month}}"
+          }
+        },
+        {
+          "name": "Regenerate action items",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/program/action-items/regenerate?month={{month}}"
+          }
+        },
+        {
+          "name": "Update action item",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"in_progress\"\n}"
+            },
+            "url": "{{baseUrl}}/api/program/action-items/{{actionItemId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Grants",
+      "item": [
+        {
+          "name": "Grant catalog",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/grants" }
+        },
+        {
+          "name": "Grant facts",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/grants/{{grantId}}/{{month}}/facts"
+          }
+        },
+        {
+          "name": "Grant report (deterministic)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/grants/{{grantId}}/{{month}}/report"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Charts (Node proxy)",
+      "item": [
+        {
+          "name": "Program trends",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"month\": \"{{month}}\",\n  \"exportPng\": false\n}"
+            },
+            "url": "{{baseUrl}}/api/charts/program-trends"
+          }
+        },
+        {
+          "name": "District performance chart",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"month\": \"{{month}}\",\n  \"exportPng\": true\n}"
+            },
+            "url": "{{baseUrl}}/api/charts/district-performance"
+          }
+        },
+        {
+          "name": "Risk distribution chart",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"month\": \"{{month}}\",\n  \"exportPng\": false\n}"
+            },
+            "url": "{{baseUrl}}/api/charts/risk-distribution"
+          }
+        },
+        {
+          "name": "Grant utilization chart",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"grantId\": \"{{grantId}}\",\n  \"month\": \"{{month}}\",\n  \"exportPng\": false\n}"
+            },
+            "url": "{{baseUrl}}/api/charts/grant-utilization"
+          }
+        },
+        {
+          "name": "Chart PNG download",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/charts/download?path=output/charts/program-trends-example.png"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reports",
+      "item": [
+        {
+          "name": "Program report",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"month\": \"{{month}}\",\n  \"aiRequested\": true\n}"
+            },
+            "url": "{{baseUrl}}/api/reports/program"
+          }
+        },
+        {
+          "name": "Grant report",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"grantId\": \"{{grantId}}\",\n  \"month\": \"{{month}}\",\n  \"aiRequested\": true\n}"
+            },
+            "url": "{{baseUrl}}/api/reports/grant"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Analytics (Python direct)",
+      "item": [
+        {
+          "name": "Analytics health",
+          "request": { "method": "GET", "url": "{{analyticsUrl}}/health" }
+        },
+        {
+          "name": "PBL summary",
+          "request": { "method": "GET", "url": "{{analyticsUrl}}/analytics/pbl/summary" }
+        },
+        {
+          "name": "Data quality",
+          "request": { "method": "GET", "url": "{{analyticsUrl}}/analytics/data-quality" }
+        },
+        {
+          "name": "Pandas dashboard",
+          "request": {
+            "method": "GET",
+            "url": "{{analyticsUrl}}/analytics/program/dashboard?month={{month}}"
+          }
+        },
+        {
+          "name": "Verify dashboard parity",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"month\": \"{{month}}\"\n}"
+            },
+            "url": "{{analyticsUrl}}/analytics/verify-dashboard"
+          }
+        },
+        {
+          "name": "Charts program-trends (direct)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"month\": \"{{month}}\",\n  \"exportPng\": false\n}"
+            },
+            "url": "{{analyticsUrl}}/charts/program-trends"
+          }
+        }
+      ]
+    }
+  ]
+}

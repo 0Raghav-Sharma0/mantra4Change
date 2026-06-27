@@ -1,0 +1,141 @@
+# Mantra4Change API examples (REST Client / VS Code / Cursor)
+# Requires server on :4000, analytics on :8000, seeded MongoDB
+
+@baseUrl = http://localhost:5000
+@analyticsUrl = http://localhost:8000
+@month = 2025-09
+@grantId = GRANT_AA_2025
+
+### Health � basic
+GET {{baseUrl}}/api/health
+
+### Health � full (Mongo, analytics, AI status)
+GET {{baseUrl}}/api/health/full
+
+### Meta � CSV seed preview counts
+GET {{baseUrl}}/api/meta/seed-preview
+
+### Program � filter options
+GET {{baseUrl}}/api/program/filters
+
+### Program � dashboard KPIs + MoM
+GET {{baseUrl}}/api/program/dashboard?month={{month}}
+
+### Program � dashboard with district filter
+GET {{baseUrl}}/api/program/dashboard?month={{month}}&district=District T
+
+### Program � district performance table
+GET {{baseUrl}}/api/program/districts?month={{month}}
+
+### Program � block performance table
+GET {{baseUrl}}/api/program/blocks?month={{month}}
+
+### Program � risk analysis
+GET {{baseUrl}}/api/program/risks?month={{month}}
+
+### Program � review summary (legacy structured lists)
+GET {{baseUrl}}/api/program/review-summary?month={{month}}
+
+### Program � monthly review (Tier 2 leadership brief)
+GET {{baseUrl}}/api/program/monthly-review?month={{month}}
+
+### Program � recommended actions
+GET {{baseUrl}}/api/program/action-items?month={{month}}
+
+### Program � regenerate actions
+POST {{baseUrl}}/api/program/action-items/regenerate?month={{month}}
+
+### Program � update action status
+PATCH {{baseUrl}}/api/program/action-items/2025-09----improve-evidence-rate
+Content-Type: application/json
+
+{
+  "status": "in_progress"
+}
+
+### Grants � catalog
+GET {{baseUrl}}/api/grants
+
+### Grants � facts for grant/month
+GET {{baseUrl}}/api/grants/{{grantId}}/{{month}}/facts
+
+### Grants � deterministic report
+GET {{baseUrl}}/api/grants/{{grantId}}/{{month}}/report
+
+### Charts � program trends (Plotly JSON)
+POST {{baseUrl}}/api/charts/program-trends
+Content-Type: application/json
+
+{
+  "month": "{{month}}",
+  "exportPng": false
+}
+
+### Charts � district performance with PNG export
+POST {{baseUrl}}/api/charts/district-performance
+Content-Type: application/json
+
+{
+  "month": "{{month}}",
+  "exportPng": true
+}
+
+### Charts � risk distribution
+POST {{baseUrl}}/api/charts/risk-distribution
+Content-Type: application/json
+
+{
+  "month": "{{month}}",
+  "exportPng": false
+}
+
+### Charts � grant utilization
+POST {{baseUrl}}/api/charts/grant-utilization
+Content-Type: application/json
+
+{
+  "grantId": "{{grantId}}",
+  "month": "{{month}}",
+  "exportPng": false
+}
+
+### Program report
+POST {{baseUrl}}/api/reports/program
+Content-Type: application/json
+
+{
+  "month": "{{month}}",
+  "aiRequested": true
+}
+
+### Grant report
+POST {{baseUrl}}/api/reports/grant
+Content-Type: application/json
+
+{
+  "grantId": "{{grantId}}",
+  "month": "{{month}}",
+  "aiRequested": true
+}
+
+### Evidence static image
+GET {{baseUrl}}/evidence/student_project_activity_photo_01.png
+
+# --- Python analytics service (direct) ---
+
+### Analytics health
+GET {{analyticsUrl}}/health
+
+### Pandas dashboard (parity reference)
+GET {{analyticsUrl}}/analytics/program/dashboard?month={{month}}
+
+### Cross-check Node vs pandas
+POST {{analyticsUrl}}/analytics/verify-dashboard
+Content-Type: application/json
+
+{
+  "month": "{{month}}"
+}
+
+### Data quality report
+GET {{analyticsUrl}}/analytics/data-quality

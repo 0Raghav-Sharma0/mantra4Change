@@ -1,0 +1,15 @@
+node_modules/
+dist/
+build/
+.env
+.env.local
+*.log
+.DS_Store
+coverage/
+.vite/
+apps/analytics/.venv/
+apps/analytics/__pycache__/
+apps/analytics/**/__pycache__/
+apps/analytics/.pytest_cache/
+*.pyc
+.mypy_cache/

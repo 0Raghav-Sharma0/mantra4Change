@@ -1,0 +1,32 @@
+{
+  "name": "mantra4change-pbl",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Mantra4Change PBL program dashboard",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "install:all": "npm install && npm run install:analytics",
+    "install:analytics": "cd apps/analytics && if command -v python3.11 >/dev/null 2>&1; then PY=python3.11; elif command -v python3.12 >/dev/null 2>&1; then PY=python3.12; else PY=python3; fi && $PY -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt",
+    "dev": "concurrently -n server,client,analytics -c blue,green,yellow \"npm run dev -w @mantra4change/server\" \"npm run dev -w @mantra4change/client\" \"npm run dev:analytics\"",
+    "dev:analytics": "cd apps/analytics && . .venv/bin/activate && uvicorn app.main:app --reload --host 0.0.0.0 --port ${ANALYTICS_PORT:-8000}",
+    "build": "npm run build -w @mantra4change/shared-types && npm run build -w @mantra4change/server && npm run build -w @mantra4change/client",
+    "seed": "npm run seed -w @mantra4change/server",
+    "validate:data": "cd apps/analytics && . .venv/bin/activate && python -m app.scripts.generate_data_quality_report",
+    "charts:samples": "cd apps/analytics && . .venv/bin/activate && python -m app.scripts.generate_sample_charts",
+    "test": "npm run test -w @mantra4change/server && npm run test:python",
+    "test:integration": "npm run test:integration -w @mantra4change/server",
+    "test:python": "cd apps/analytics && . .venv/bin/activate && pytest -q",
+    "verify": "npm run verify -w @mantra4change/server",
+    "lint": "npm run lint -ws --if-present",
+    "typecheck": "npm run typecheck -ws --if-present"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

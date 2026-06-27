@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    services:
+      mongodb:
+        image: mongo:7
+        ports:
+          - 27017:27017
+
+    env:
+      MONGODB_URI: mongodb://localhost:27017/mantra4change
+      ENABLE_AI_NARRATIVE: "false"
+      AI_ENABLED: "false"
+      NODE_ENV: test
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: npm run install:all
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+
+      - name: Seed MongoDB
+        run: npm run seed
+
+      - name: Server unit tests
+        run: npm run test -w @mantra4change/server
+
+      - name: Python tests
+        run: npm run test:python
+
+      - name: Integration tests
+        run: npm run test:integration
+        env:
+          RUN_INTEGRATION_TESTS: "1"
+
+      - name: Evaluation verify
+        run: npm run verify
