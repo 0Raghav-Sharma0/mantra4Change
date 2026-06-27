@@ -1,223 +1,117 @@
 # Mantra4Change PBL Dashboard
 
-A minimal full-stack dashboard for reviewing **Project-Based Learning (PBL)** programs with district-wise analytics, grant reporting, AI-generated summaries, and interactive visualizations.
+A minimal monorepo for a synthetic PBL program review dashboard with grant reporting and chart analytics.
 
----
+## Quick start
 
-## Dashboard Preview
+### Prerequisites
 
-<table>
-<tr>
-<td width="50%">
-<img src="./image.png" alt="Dashboard Overview" width="100%">
-</td>
-<td width="50%">
-<img src="./district_data.png" alt="District Analytics" width="100%">
-</td>
-</tr>
+- Node.js 20+
+- npm 10+
+- Python 3.11+ / 3.12
+- Docker (for MongoDB)
 
-<tr>
-<td width="50%">
-<img src="./grants.png" alt="Grant Reporting" width="100%">
-</td>
-<td width="50%">
-<img src="./AI_report.png" alt="AI Report" width="100%">
-</td>
-</tr>
-</table>
-
-<p align="center">
-<img src="./graphs.png" alt="Analytics Graphs" width="90%">
-</p>
-
----
-
-## Features
-
-* District-wise PBL analytics
-* Grant reporting dashboard
-* AI-generated program review summaries
-* Interactive charts and visualizations
-* CSV-based data seeding
-* REST API with MongoDB
-* Python analytics service
-* Shared TypeScript schemas across applications
-
----
-
-## Tech Stack
-
-| Layer            | Technology              |
-| ---------------- | ----------------------- |
-| Frontend         | React, Vite             |
-| Backend          | Express.js              |
-| Database         | MongoDB                 |
-| Analytics        | FastAPI (Python)        |
-| Charts           | Plotly                  |
-| Shared Types     | TypeScript              |
-| Containerization | Docker & Docker Compose |
-
----
-
-## Repository Structure
-
-```text
-apps/
-├── client/          # React + Vite dashboard
-├── server/          # Express API
-└── analytics/       # FastAPI analytics service
-
-packages/
-└── shared-types/    # Shared TypeScript schemas
-```
-
----
-
-## Prerequisites
-
-* Node.js 20+
-* npm 10+
-* Python 3.11+
-* Docker & Docker Compose
-
----
-
-## Installation
+### Install
 
 ```bash
 npm install
 npm run install:analytics
 ```
 
----
-
-## Local Setup
-
-Copy the environment files:
+### Run locally
 
 ```bash
 cp apps/server/.env.example apps/server/.env
 cp apps/client/.env.example apps/client/.env
 cp apps/analytics/.env.example apps/analytics/.env
-```
 
-Start MongoDB:
-
-```bash
 docker compose up -d
-```
-
-Seed the database:
-
-```bash
 npm run seed
-```
-
-Start all services:
-
-```bash
 npm run dev
 ```
 
----
+### Local URLs
 
-## Local URLs
+- Client: `http://localhost:5173`
+- Server: `http://localhost:5000`
+- Analytics: `http://localhost:8000`
+- MongoDB: `mongodb://localhost:27017/mantra4change`
 
-| Service   | URL                                     |
-| --------- | --------------------------------------- |
-| Frontend  | http://localhost:5173                   |
-| Backend   | http://localhost:5000                   |
-| Analytics | http://localhost:8000                   |
-| MongoDB   | mongodb://localhost:27017/mantra4change |
+## Commands
 
----
+- `npm run dev` — start client, server, and analytics
+- `npm run seed` — load CSV data into MongoDB
+- `npm run verify` — run verification checks
+- `npm test` — run server and Python tests
+- `npm run build` — build client, server, and shared types
+- `npm run lint` — lint workspaces
 
-## Available Commands
+## Repo structure
 
-```bash
-npm run dev        # Start all services
-npm run seed       # Seed MongoDB from CSV files
-npm run verify     # Verification checks
-npm test           # Run backend and Python tests
-npm run build      # Build all workspaces
-npm run lint       # Lint the repository
-```
+- `apps/client` — React + Vite dashboard
+- `apps/server` — Express API, MongoDB, report services
+- `apps/analytics` — Python FastAPI chart generation
+- `packages/shared-types` — shared TypeScript schemas
 
----
+## Live deployment
 
-## Architecture
+- Live frontend: https://mantra4-change-client-g1ks.vercel.app
 
-```mermaid
-flowchart LR
-    Client[React + Vite Client]
-        --> Server[Express API]
-
-    Server --> MongoDB[(MongoDB)]
-    Server --> Analytics[FastAPI Analytics]
-
-    Analytics --> Charts[Plotly Charts]
-```
-
----
-
-## Data Flow
-
-```mermaid
-flowchart TD
-
-CSV[CSV Files]
-    --> Seed[Seed Script]
-
-Seed
-    --> MongoDB[(MongoDB)]
-
-User
-    --> Client[Dashboard]
-
-Client
-    --> API[Express API]
-
-API
-    --> MongoDB
-
-API
-    --> Analytics[FastAPI]
-
-Analytics
-    --> API
-
-API
-    --> Client
-```
-
----
-
-## Deployment
-
-Run the complete backend stack locally using Docker Compose:
+The project can run locally with Docker Compose for the full backend stack.
 
 ```bash
 docker compose -f docker-compose.prod.yml up --build
 ```
 
-### Frontend (Vercel)
+### Vercel frontend deployment
 
-The frontend can be deployed independently on Vercel.
+The client can also be deployed to Vercel as a static app. This repo includes `vercel.json` for the front-end build.
 
-Required environment variable:
+- Vercel builds `apps/client` with `@vercel/static-build`
+- The app is served from `dist`
+- SPA fallback is enabled via Vercel routes
 
-```env
-VITE_API_BASE_URL=https://your-backend-host.com
+#### Vercel environment variables
+
+Set these values in the Vercel dashboard under Project Settings > Environment Variables:
+
+- `VITE_API_BASE_URL` = `https://your-backend-host.com`
+
+For local preview builds in Vercel, the value should point to the running API host.
+
+> Note: the backend and analytics stack still need a separate host with MongoDB.
+
+## System diagrams
+
+### Architecture overview
+
+```mermaid
+flowchart LR
+  A[Client<br/>React + Vite] --> B[Server<br/>Express API]
+  B --> C[MongoDB]
+  B --> D[Analytics<br/>Python FastAPI]
+  D --> E[Chart data<br/>Plotly / PNG]
+  A -->|API calls| B
+  B -->|aggregates| C
+  B -->|chart requests| D
 ```
 
-> The backend, analytics service, and MongoDB should be hosted separately.
+### Data flow
 
----
+```mermaid
+flowchart TD
+  CSV[CSV sources] --> Seed[Seed script]
+  Seed --> Mongo[MongoDB]
+  User[User filters] --> UI[Client UI]
+  UI --> API[Server endpoints]
+  API --> DB[Queries & metrics]
+  API --> Analytics[Chart generation]
+  Analytics --> API
+  API --> UI
+```
 
 ## Notes
 
-* Data is seeded from the provided CSV datasets.
-* AI-generated narratives are optional and require provider API keys.
-* Continuous Integration is configured via GitHub Actions.
-
----
+- Data is seeded from CSV files in `02_Primary_PBL_Data` and `03_Grant_Reporting_Evidence/csv`.
+- AI narrative is optional and requires provider keys in `apps/server/.env`.
+- CI is configured in `.github/workflows/ci.yml`.

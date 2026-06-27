@@ -1,5 +1,6 @@
 import type { GrantEvidenceFact } from "@mantra4change/shared-types";
 import { EmptyState } from "../ui/StatePanels";
+import { API_BASE } from "../../api/http";
 
 export function EvidenceGallery({ evidence }: { evidence: GrantEvidenceFact[] }) {
   if (evidence.length === 0) {
@@ -21,7 +22,15 @@ export function EvidenceGallery({ evidence }: { evidence: GrantEvidenceFact[] })
         {evidence.map((item) => (
           <article key={item.recordId} className="evidence-card">
             <div className="evidence-image-wrap">
-              <img src={item.imageUrl} alt={item.title} loading="lazy" />
+              <img
+                src={
+                  item.imageUrl.startsWith("http")
+                    ? item.imageUrl
+                    : `${API_BASE.replace(/\/$/, "")}${item.imageUrl}`
+                }
+                alt={item.title}
+                loading="lazy"
+              />
             </div>
             <div className="evidence-body">
               <p className="evidence-id">{item.recordId}</p>
