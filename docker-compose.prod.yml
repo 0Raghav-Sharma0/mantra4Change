@@ -1,0 +1,65 @@
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_DATABASE: mantra4change
+    volumes:
+      - mongo_data:/data/db
+
+  analytics:
+    build:
+      context: .
+      dockerfile: Dockerfile.analytics
+    ports:
+      - '8000:8000'
+    environment:
+      HOST: 0.0.0.0
+      ANALYTICS_PORT: 8000
+      DATA_ROOT: /app/data
+      PBL_CSV_DIR: /app/data/pbl/csv_exports
+      GRANT_CSV_DIR: /app/data/grant/csv
+      CHART_OUTPUT_DIR: /app/analytics/output/charts
+      REPORTS_DIR: /app/analytics/reports
+      NODE_SERVER_URL: http://server:5000
+    volumes:
+      - ./data:/app/data:ro
+      - ./apps/analytics/output:/app/output
+      - ./apps/analytics/reports:/app/reports
+    depends_on:
+      - mongo
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    ports:
+      - '5000:5000'
+    environment:
+      PORT: 5000
+      NODE_ENV: production
+      MONGODB_URI: mongodb://mongo:27017/mantra4change
+      ANALYTICS_SERVICE_URL: http://analytics:8000
+      CLIENT_ORIGIN: http://localhost
+      GRANT_EVIDENCE_PATH: /app/data/grant/images
+    volumes:
+      - ./data:/app/data:ro
+    depends_on:
+      - mongo
+      - analytics
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+      args:
+        VITE_API_BASE_URL: http://localhost:5000
+    ports:
+      - '80:80'
+    depends_on:
+      - server
+
+volumes:
+  mongo_data:

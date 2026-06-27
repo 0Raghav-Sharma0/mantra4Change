@@ -53,6 +53,21 @@ npm run dev
 - `apps/analytics` — Python FastAPI chart generation
 - `packages/shared-types` — shared TypeScript schemas
 
+## Live deployment
+
+Use the production Docker Compose stack to run the full application.
+
+```bash
+docker compose -f docker-compose.prod.yml up --build
+```
+
+The service endpoints will be:
+
+- Client: `http://localhost`
+- Server: `http://localhost:5000`
+- Analytics: `http://localhost:8000`
+- MongoDB: `mongodb://localhost:27017/mantra4change`
+
 ## System diagrams
 
 ### Architecture overview

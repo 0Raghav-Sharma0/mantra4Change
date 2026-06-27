@@ -1,0 +1,16 @@
+node_modules
+**/node_modules
+dist
+**/dist
+build
+**/build
+.vscode
+.git
+.gitignore
+.DS_Store
+*.log
+apps/analytics/.venv
+apps/analytics/__pycache__
+apps/analytics/.pytest_cache
+apps/client/tsconfig.app.tsbuildinfo
+apps/client/tsconfig.node.tsbuildinfo

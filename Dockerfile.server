@@ -1,0 +1,25 @@
+FROM node:20-alpine AS builder
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+COPY apps/server/package.json apps/server/package.json
+COPY packages/shared-types/package.json packages/shared-types/package.json
+COPY apps/server/tsconfig.json apps/server/tsconfig.json
+COPY packages/shared-types/tsconfig.json packages/shared-types/tsconfig.json
+
+COPY apps/server/src apps/server/src
+COPY packages/shared-types/src packages/shared-types/src
+
+RUN npm install
+RUN npm run build -w @mantra4change/server
+
+FROM node:20-alpine AS runtime
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/apps/server/dist ./dist
+COPY apps/server/.env.example .env.example
+
+EXPOSE 5000
+CMD ["node", "dist/index.js"]
