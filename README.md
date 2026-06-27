@@ -55,18 +55,21 @@ npm run dev
 
 ## Live deployment
 
-Use the production Docker Compose stack to run the full application.
+The project can run locally with Docker Compose for the full backend stack.
 
 ```bash
 docker compose -f docker-compose.prod.yml up --build
 ```
 
-The service endpoints will be:
+### Vercel frontend deployment
 
-- Client: `http://localhost`
-- Server: `http://localhost:5000`
-- Analytics: `http://localhost:8000`
-- MongoDB: `mongodb://localhost:27017/mantra4change`
+The client can also be deployed to Vercel as a static app. This repo includes `vercel.json` for the front-end build.
+
+- Vercel builds `apps/client` with `@vercel/static-build`
+- The app is served from `dist`
+- SPA fallback is enabled via Vercel routes
+
+> Note: the backend and analytics stack still need a separate host with MongoDB.
 
 ## System diagrams
 

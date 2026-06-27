@@ -1,0 +1,10 @@
+**/node_modules
+**/dist
+**/build
+**/.git
+**/.github
+**/apps/server
+**/apps/analytics
+**/data
+**/*.log
+**/.DS_Store
